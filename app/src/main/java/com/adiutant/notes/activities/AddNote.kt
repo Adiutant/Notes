@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.adiutant.notes.R
 import com.adiutant.notes.db.NoteDao
@@ -24,6 +25,7 @@ class AddNote : AppCompatActivity(),NoteView {
     private lateinit var _saveBtn:Button
     private lateinit var _noteShown:Notes
     private lateinit var mainText: EditText
+    private lateinit var dateView:TextView
     private var isCreate = false
     private var mNoteDao = NoteDao()
     private  var noteId:Long = 0
@@ -34,6 +36,7 @@ class AddNote : AppCompatActivity(),NoteView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
         _backBtn = findViewById(R.id.backBtn)
+        dateView = findViewById(R.id.dateView)
         presenter = NotePresenter()
         _saveBtn = findViewById(R.id.saveBtn)
          mainText = findViewById(R.id.mainText)
@@ -83,6 +86,8 @@ class AddNote : AppCompatActivity(),NoteView {
     override fun showNote(note: Notes) {
         _noteShown = note
         mainText.setText(note.text)
+        dateView.text = note.changeDate?.time.toString()
+
     }
 
     override fun onNoteSaved() {
