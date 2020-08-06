@@ -34,7 +34,7 @@ class MainPresenter {
         notesList = mNoteDao.loadAllNotes()
         return notesList
     }
-    //e2
+    //e
     fun deleteNote(position:Int)
     {
         var note = notesList[position-1]
