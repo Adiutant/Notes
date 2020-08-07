@@ -28,6 +28,8 @@ class AddNote : AppCompatActivity(),NoteView {
     private lateinit var _noteShown:Notes
     private lateinit var mainText: EditText
     private lateinit var dateView:TextView
+    private val MINUTE_VLAUE:Long = 60000
+    private val DATE_NOW_MESSAGE_CODE = "Только что"
     private var isCreate = false
     private var mNoteDao = NoteDao()
     private  var noteId:Long = 0
@@ -90,7 +92,12 @@ class AddNote : AppCompatActivity(),NoteView {
         mainText.setText(note.text)
        val formatter:SimpleDateFormat= SimpleDateFormat("dd/MM/yy")
         if (note.changeDate!=null) {
-            dateView.text = formatter.format(note.changeDate!!)
+            if(Date().time - note.changeDate!!.time  < MINUTE_VLAUE) {
+                dateView.text = DATE_NOW_MESSAGE_CODE
+            }
+            else {
+                dateView.text = formatter.format(note.changeDate!!)
+            }
         }
 
     }
