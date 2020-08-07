@@ -31,7 +31,6 @@ class AddNote : AppCompatActivity(),NoteView {
     private val MINUTE_VLAUE:Long = 60000
     private val DATE_NOW_MESSAGE_CODE = "Только что"
     private var isCreate = false
-    private var mNoteDao = NoteDao()
     private  var noteId:Long = 0
 
     private lateinit var presenter: NotePresenter

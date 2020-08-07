@@ -1,12 +1,10 @@
 package com.adiutant.notes.mvp.presenters
 
-//import com.adiutant.notes.NotesApplication
+
 import com.adiutant.notes.db.NoteDao
 import com.adiutant.notes.mvp.models.Notes
-import com.adiutant.notes.mvp.views.NoteView
-import org.greenrobot.eventbus.EventBus
 import java.util.*
-import javax.inject.Inject
+
 
 
 class NotePresenter {
@@ -20,14 +18,6 @@ class NotePresenter {
 ////       EventBus.getDefault().register(this)
 //    }
 
-//    fun saveNote(title: String, text: String) {
-//        mNote.title = title
-//        mNote.text = text
-//        mNote.changeDate = Date()
-//        mNoteDao.saveNote(mNote)
-//        //EventBus.getDefault().post(NoteEditAction(note.id))
-//       // viewState.onNoteSaved()
-//    }
     fun saveNote(title: String,text: String,note:Notes)
     {
         mNote.title=title

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView.AdapterContextMenuInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.adiutant.notes.R
@@ -18,21 +17,16 @@ import com.google.android.material.tabs.TabItem
 import com.google.android.material.tabs.TabLayout
 
 
-//import com.arellomobile.mvp.presenter.InjectPresenter
 
 
 class MainActivity : AppCompatActivity(), MainView {
-    //private lateinit var adapter: ArrayAdapter<Notes>
     private lateinit var _listView: RecyclerView
     private lateinit var _tabLayout: TabLayout
     private lateinit var _newNote: TabItem
     private  var contextPosition:Int =0
     lateinit var presenter: MainPresenter
     private var isCreate = false
-
     private lateinit var allNotes: ArrayList<Notes>
-    //private lateinit var dbHelper: DBHelper
-    //private var currentUser = User()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +55,6 @@ class MainActivity : AppCompatActivity(), MainView {
             }
         })
 
-        //listNotes.add(Notes("Note one",Date(System.currentTimeMillis()),Date(System.currentTimeMillis())))
-        //listNotes.add(Notes("Note two",Date(System.currentTimeMillis()),Date(System.currentTimeMillis())))
-        //listNotes.add(Notes("Note three",Date(System.currentTimeMillis()),Date(System.currentTimeMillis())))
     }
     override fun onNotesLoaded(notes: List<Notes>) {
         _listView.adapter= RecAdapter(notes)
@@ -122,12 +113,5 @@ class MainActivity : AppCompatActivity(), MainView {
         intent.putExtras(bundle)
         startActivity(intent)
     }
-
-
-//    private fun act(view: View)
-//    {
-//        var intent = Intent(this, AddNote::class.java)
-//        startActivity(intent)
-//    }
 
 }
