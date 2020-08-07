@@ -16,6 +16,8 @@ import com.adiutant.notes.mvp.presenters.NotePresenter
 import com.adiutant.notes.mvp.views.NoteView
 import java.lang.Exception
 import java.sql.Date
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -86,7 +88,10 @@ class AddNote : AppCompatActivity(),NoteView {
     override fun showNote(note: Notes) {
         _noteShown = note
         mainText.setText(note.text)
-        dateView.text = note.changeDate?.time.toString()
+       val formatter:SimpleDateFormat= SimpleDateFormat("dd/MM/yy")
+        if (note.changeDate!=null) {
+            dateView.text = formatter.format(note.changeDate!!)
+        }
 
     }
 
