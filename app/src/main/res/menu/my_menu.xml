@@ -2,8 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_print"
-        android:icon="@android:drawable/checkbox_on_background"
-        android:title="Print"
-        app:showAsAction="always" />
+        android:id="@+id/color_1_select"
+        android:title="Лазурь"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/color_2_select"
+        android:title="Рубин"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/color_3_select"
+        android:title="Кварц"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/color_4_select"
+        android:title="Ночной"
+        app:showAsAction="never" />
 </menu>

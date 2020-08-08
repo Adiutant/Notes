@@ -6,7 +6,7 @@ import com.adiutant.notes.mvp.models.Notes
 
 
 interface NoteView  {
-    fun doOnClick()
+
     fun showNote(note: Notes)
 
     fun onNoteSaved()

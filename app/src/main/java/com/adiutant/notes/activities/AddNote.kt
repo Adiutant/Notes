@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -22,7 +24,7 @@ import java.util.*
 
 
 class AddNote : AppCompatActivity(),NoteView {
-    private lateinit var _backBtn:Button
+    //private lateinit var _backBtn:Button
     private lateinit var _back:Intent
     private lateinit var _saveBtn:Button
     private lateinit var _noteShown:Notes
@@ -39,10 +41,10 @@ class AddNote : AppCompatActivity(),NoteView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
-        _backBtn = findViewById(R.id.backBtn)
+        setSupportActionBar(findViewById(R.id.toolbar_add_note))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         dateView = findViewById(R.id.dateView)
         presenter = NotePresenter()
-        _saveBtn = findViewById(R.id.saveBtn)
          mainText = findViewById(R.id.mainText)
         _back = Intent(this, MainActivity::class.java)
         val bundle = intent.extras
@@ -55,25 +57,16 @@ class AddNote : AppCompatActivity(),NoteView {
         {
             showNote(presenter.showNewNote())
         }
-        doOnClick()
 
     }
 
-    companion object {
-        const val NOTE_DELETE_ARG = "note_id"
-
-        fun buildIntent(activity: Activity, noteId: Long) : Intent{
-            val intent = Intent(activity, AddNote::class.java)
-            intent.putExtra(NOTE_DELETE_ARG, noteId)
-            return intent
-        }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_add_note,menu)
+        return super.onCreateOptionsMenu(menu)
     }
-    override fun doOnClick()
-    {
-        _backBtn.setOnClickListener {
-            startActivity(_back)
-        }
-        _saveBtn.setOnClickListener {
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.newNote -> {
+            // User chose the "Print" item
             try {
                 val header= mainText.text.split(" ",limit =2)
                 presenter.saveNote(header[0], mainText.text.toString(), _noteShown)
@@ -83,14 +76,35 @@ class AddNote : AppCompatActivity(),NoteView {
             {
 
             }
+            true
+        }
+        android.R.id.home ->{
+           startActivity(_back)
+            finish()
+            true
+        }
 
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
         }
     }
+    companion object {
+        const val NOTE_DELETE_ARG = "note_id"
+
+        fun buildIntent(activity: Activity, noteId: Long) : Intent{
+            val intent = Intent(activity, AddNote::class.java)
+            intent.putExtra(NOTE_DELETE_ARG, noteId)
+            return intent
+        }
+    }
+
 
     override fun showNote(note: Notes) {
         _noteShown = note
         mainText.setText(note.text)
-       val formatter:SimpleDateFormat= SimpleDateFormat("dd/MM/yy")
+       val formatter= SimpleDateFormat("dd/MM/yy")
         if (note.changeDate!=null) {
             if(Date().time - note.changeDate!!.time  < MINUTE_VLAUE) {
                 dateView.text = DATE_NOW_MESSAGE_CODE

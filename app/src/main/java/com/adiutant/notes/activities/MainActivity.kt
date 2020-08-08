@@ -15,8 +15,8 @@ import com.adiutant.notes.mvp.presenters.MainPresenter
 import com.adiutant.notes.mvp.views.MainView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
-
-
+import java.lang.Exception
+import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -48,10 +48,33 @@ class MainActivity : AppCompatActivity(), MainView {
         }
 
     }
+
+    override fun onDestroy() {
+        moveTaskToBack(true)
+        super.onDestroy()
+        System.runFinalization()
+        exitProcess(0)
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.my_menu,menu)
         return super.onCreateOptionsMenu(menu)
     }
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+
+        android.R.id.home ->{
+            finish()
+            true
+        }
+
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+
+
     override fun onNotesLoaded(notes: List<Notes>) {
         _listView.adapter= RecAdapter(notes)
         registerForContextMenu(_listView)
@@ -69,7 +92,7 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        if (item!!.title ==DELETE_NOTE_CODE)
+        if (item.title ==DELETE_NOTE_CODE)
         {
             presenter.deleteNote(contextPosition+1)
             onNoteDeleted()
