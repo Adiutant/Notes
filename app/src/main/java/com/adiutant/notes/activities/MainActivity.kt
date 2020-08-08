@@ -2,9 +2,12 @@ package com.adiutant.notes.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.ContextMenu
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.adiutant.notes.R
@@ -13,7 +16,7 @@ import com.adiutant.notes.adapters.RecAdapter
 import com.adiutant.notes.mvp.models.Notes
 import com.adiutant.notes.mvp.presenters.MainPresenter
 import com.adiutant.notes.mvp.views.MainView
-import com.google.android.material.tabs.TabItem
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 
 
@@ -21,7 +24,8 @@ import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity(), MainView {
     private lateinit var _listView: RecyclerView
-    private lateinit var _tabLayout: TabLayout
+    private lateinit var toolbar: Toolbar
+    private lateinit var newNoteButton:FloatingActionButton
     private  var contextPosition:Int =0
     lateinit var presenter: MainPresenter
     private var isCreate = false
@@ -33,29 +37,15 @@ class MainActivity : AppCompatActivity(), MainView {
         setContentView(R.layout.activity_main)
         presenter = MainPresenter()
         _listView = findViewById(R.id.taskList)
-      //  _tabLayout = findViewById(R.id.tabLayout)
-      //  _tabLayout.
-
+        newNoteButton = findViewById(R.id.newNote)
+        newNoteButton.setOnClickListener {  isCreate=true
+             openNoteScreen(presenter.openNote(-1)) }
         onNotesLoaded(presenter.loadAllNotes())
         with(ItemClickSupport.addTo(_listView)) {
             setOnItemClickListener { _, position, _ -> openNoteScreen(presenter.openNote(position)) }
             setOnItemLongClickListener { _, position, _ -> contextPosition = position
                 openContextMenu(_listView); true }
         }
-//        _tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-//            override fun onTabSelected(tab: TabLayout.Tab?) {
-//                isCreate=true
-//                openNoteScreen(presenter.openNote(-1))
-//            }
-//
-//            override fun onTabReselected(tab: TabLayout.Tab?) {
-//                // Handle tab reselect
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {
-//                // Handle tab unselect
-//            }
-//        })
 
     }
     override fun onNotesLoaded(notes: List<Notes>) {
