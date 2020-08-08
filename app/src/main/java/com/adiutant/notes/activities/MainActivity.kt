@@ -3,10 +3,7 @@ package com.adiutant.notes.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.AttributeSet
-import android.view.ContextMenu
-import android.view.Gravity
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -38,6 +35,9 @@ class MainActivity : AppCompatActivity(), MainView {
         presenter = MainPresenter()
         _listView = findViewById(R.id.taskList)
         newNoteButton = findViewById(R.id.newNote)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         newNoteButton.setOnClickListener {  isCreate=true
              openNoteScreen(presenter.openNote(-1)) }
         onNotesLoaded(presenter.loadAllNotes())
@@ -47,6 +47,10 @@ class MainActivity : AppCompatActivity(), MainView {
                 openContextMenu(_listView); true }
         }
 
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.my_menu,menu)
+        return super.onCreateOptionsMenu(menu)
     }
     override fun onNotesLoaded(notes: List<Notes>) {
         _listView.adapter= RecAdapter(notes)
