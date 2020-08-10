@@ -1,12 +1,15 @@
 package com.adiutant.notes.mvp.models
 
-class User {
-    var listNotes = mutableListOf<Notes>()
+import android.graphics.Color
+import com.orm.SugarRecord
+import java.util.*
 
-    fun loadNotesDB(notes:List<Notes>):List<Notes>
-    {
-       listNotes.addAll(notes)
-        return listNotes
+class User:SugarRecord {
+    var styleColor:Int? = null
+
+    constructor(color: Int) {
+        this.styleColor = color
     }
+    constructor()
 
 }

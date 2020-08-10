@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme"
         android:name="com.orm.SugarApp"> <!--Используйте этот атрибут дословно-->
         <meta-data android:name="DATABASE" android:value="notes.db"/>
-        <meta-data android:name="VERSION" android:value="1"/>
+        <meta-data android:name="VERSION" android:value="2"/>
         <meta-data android:name="QUERY_LOG" android:value="true"/>
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.adiutant"/>
         <activity android:name=".activities.AddNote"></activity>
@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
