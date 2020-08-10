@@ -2,6 +2,7 @@ package com.adiutant.notes.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -10,12 +11,16 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.adiutant.notes.R
 import com.adiutant.notes.db.NoteDao
 import com.adiutant.notes.mvp.models.Notes
 import com.adiutant.notes.mvp.presenters.MainPresenter
 import com.adiutant.notes.mvp.presenters.NotePresenter
+import com.adiutant.notes.mvp.presenters.UserPresenter
 import com.adiutant.notes.mvp.views.NoteView
+import com.adiutant.notes.mvp.views.UserView
+import kotlinx.android.synthetic.main.activity_add_note.*
 import java.lang.Exception
 import java.sql.Date
 import java.text.DateFormat
@@ -23,17 +28,17 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddNote : AppCompatActivity(),NoteView {
+class AddNote : AppCompatActivity(),NoteView,UserView {
     //private lateinit var _backBtn:Button
     private lateinit var _back:Intent
-    private lateinit var _saveBtn:Button
+    private lateinit var userPresenter: UserPresenter
     private lateinit var _noteShown:Notes
     private lateinit var mainText: EditText
     private lateinit var dateView:TextView
+    private lateinit var toolbar: Toolbar
     private val MINUTE_VLAUE:Long = 60000
     private val DATE_NOW_MESSAGE_CODE = "Только что"
     private var isCreate = false
-    private var mNoteDao = NoteDao()
     private  var noteId:Long = 0
 
     private lateinit var presenter: NotePresenter
@@ -45,7 +50,9 @@ class AddNote : AppCompatActivity(),NoteView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         dateView = findViewById(R.id.dateView)
         presenter = NotePresenter()
+        userPresenter = UserPresenter()
          mainText = findViewById(R.id.mainText)
+        onColorLoaded()
         _back = Intent(this, MainActivity::class.java)
         val bundle = intent.extras
         noteId = bundle!!.getLong("note_id")
@@ -140,6 +147,15 @@ class AddNote : AppCompatActivity(),NoteView {
         TODO("Not yet implemented")
     }
 
+    override fun onColorLoaded() {
+        val color = userPresenter.loadColor(R.color.colorPrimary)!!
+        window.navigationBarColor = resources.getColor(color,theme)
+        window.statusBarColor = resources.getColor(color,theme)
+        toolbar = findViewById(R.id.toolbar_add_note)
+        toolbar.setBackgroundColor(resources.getColor(color,theme))
+        setSupportActionBar(findViewById(R.id.toolbar_add_note))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
 //    fun onClickBack()
 //    {

@@ -168,8 +168,8 @@ class MainActivity : AppCompatActivity(), MainView,UserView {
 
     override fun onColorLoaded() {
         val color = userPresenter.loadColor(R.color.colorPrimary)!!
-        window.navigationBarColor = resources.getColor(color,theme);
-        window.statusBarColor = resources.getColor(color,theme);
+        window.navigationBarColor = resources.getColor(color,theme)
+        window.statusBarColor = resources.getColor(color,theme)
         newNoteButton.backgroundTintList =
             ColorStateList.valueOf(resources.getColor(color,theme))
         newNoteButton.show()
